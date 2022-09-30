@@ -1,10 +1,10 @@
 import { Box, Grid, Typography, Button, Skeleton, Rating, CardMedia, Card } from "@mui/material";
-import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { getProductById } from "../../api/productsApi";
 import { ShopLayout } from "../../components/layouts";
 import { ItemCounter } from "../../components/ui";
 import { IProductFake } from "../../modules/products/domain/productFake";
+import { GetServerSideProps } from "next";
 
 interface Props {
     product: IProductFake,
@@ -14,7 +14,7 @@ interface Props {
 const ProductPage: FC<Props> = ({ product, toggleTheme }) => {
     const [listImages, setlistImages] = useState<string[]>([]);
     const [isImageLoaded, setisImageLoaded] = useState(false);
-    const router = useRouter();
+   
 
     return (
         <>
@@ -93,10 +93,18 @@ const ProductPage: FC<Props> = ({ product, toggleTheme }) => {
 
 // You should use getServerSideProps when:
 // - Only if you need to pre-render a page whose data must be fetched at request time
-import { GetServerSideProps } from "next";
+
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    
     const { data } = await getProductById(Number(ctx.query.slug)); // your fetch function here
+
+    
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
 
     return {
         props: {

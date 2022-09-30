@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 
@@ -9,7 +9,9 @@ import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import createEmotionCache from '../components/createEmotionCache';
 import { lightTheme } from '../themes/lightTheme';
-import { darkTheme } from '../themes/darktheme';
+import { darkTheme } from '../themes/darkTheme';
+
+
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

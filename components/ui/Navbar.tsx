@@ -1,16 +1,12 @@
 import { DarkMode, Menu, SearchOutlined, ShoppingCartOutlined } from "@mui/icons-material";
-import { AppBar, Badge, Box, Button, IconButton, Link, Toolbar, Tooltip, Typography } from "@mui/material";
+import { AppBar, Badge, Box, IconButton, Link, Toolbar, Tooltip, Typography } from "@mui/material";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAllCategories } from "../../api/categoryApi";
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from 'react-redux'
 import { isOpenMenuSet } from "../../redux/slices";
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
-import { grey } from "@mui/material/colors";
 import { useThemeShop } from "../hooks/useThemeShop";
 
 
@@ -96,7 +92,7 @@ export const Navbar = (props: HomeProps) => {
                         <NextLink href="/cart" passHref>
                             <Link>
                                 <IconButton>
-                                    <Badge badgeContent={2}>
+                                    <Badge badgeContent={2} color="error">
                                         <ShoppingCartOutlined />
                                     </Badge>
                                 </IconButton>

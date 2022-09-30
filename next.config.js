@@ -5,6 +5,7 @@ const nextConfig = {
   images: {
     domains: ['fakestoreapi.com','https://fakestoreapi.com/'],
   },
+  staticPageGenerationTimeout: 1500
 }
 
 module.exports = nextConfig

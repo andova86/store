@@ -1,27 +1,15 @@
-import { deepOrange, grey } from '@mui/material/colors';
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material";
 
 
 export const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    
-    text: {
-      primary: '#fff',
-      secondary: grey[500],
+    palette: {
+        mode: "dark",
     },
-   
-
-  },
-  components: {
-    MuiLink: {
-      defaultProps: {
-        underline: 'none',
-      },
+    components: {
+        MuiLink: {
+            defaultProps: {
+                underline: "none",
+            },
+        },
     },
-   
-   
-    
-   
-  }
 });
