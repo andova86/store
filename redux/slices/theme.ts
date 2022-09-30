@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     isOpenMenu: false,
- 
+    isDark: false
 }
 
 export const themeSlice = createSlice({
@@ -16,12 +16,16 @@ export const themeSlice = createSlice({
             state.isOpenMenu = action.payload
         },
 
+        isDarkSet: (state, action) => {
+            state.isDark = action.payload
+        },
+
       
        
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { resetStateTheme, isOpenMenuSet} = themeSlice.actions
+export const { resetStateTheme, isOpenMenuSet, isDarkSet} = themeSlice.actions
 
 export default themeSlice.reducer

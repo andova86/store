@@ -42,7 +42,7 @@ const getColorCategory = (cat:string) => {
         <>
             <Grid item xs={4} sm={4} md={4} xl={3} key={product.id}>
                
-                        <Card className={styles.productFake} >
+                        <Card className={styles.productFake} elevation={8}>
                         <CardActionArea>
                             <NextLink 
                              href={{
@@ -54,16 +54,16 @@ const getColorCategory = (cat:string) => {
                                 <Link>
                                 <Container>
                                 <Grid container spacing={2}>
-                                    <Grid item xs={12} display='flex' justifyContent={'end'}>
+                                    <Grid item xs={12} display='flex' justifyContent={'end'} sx={{mb:2, mt:1}}>
                                         {
                                             getColorCategory(product.category)
                                         }
                                     </Grid>
 
-                                    <Grid item xs={12} sx={{backgroundColor: 'white'}}>
+                                    <Grid item xs={12} >
 
                                         <Image src={product.image} layout="responsive" width={250} height={200}
-                                            style={{ borderRadius: '20px' }} objectFit={'contain'} />
+                                            style={{ borderRadius: '20px' }} objectFit={'contain'} alt={product.title}/>
 
                                     </Grid>
 

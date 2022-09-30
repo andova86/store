@@ -7,9 +7,10 @@ interface Props {
   title: string;
   pageDescription: string;
   imageFullUrl?: string;
+  toggleTheme?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export const ShopLayout:FC<Props> = ({children, title, pageDescription, imageFullUrl }) => {
+export const ShopLayout:FC<Props> = ({children, title, pageDescription, imageFullUrl, toggleTheme }) => {
   return (
     <>
       <Head>
@@ -26,7 +27,7 @@ export const ShopLayout:FC<Props> = ({children, title, pageDescription, imageFul
 
       </Head>
       <nav>
-        <Navbar />
+        <Navbar toggleTheme={toggleTheme}/>
       </nav>
 
       <SideMenu/>

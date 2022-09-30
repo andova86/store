@@ -5,16 +5,18 @@ import { ProductList } from '../modules/products/application/list/ProductList';
 
 
 interface Props {
- productList: IProductFake[]
+ productList: IProductFake[],
+ toggleTheme: any
+
 }
 
-const Home: FC<Props> = ({productList}) => {
+const Home: FC<Props> = ({productList, toggleTheme}) => {
 
   const [showLoading, setShowLoading] = useState(false)
  
 
   return (
-    <ShopLayout title='Lista de Productos' pageDescription=''>
+    <ShopLayout title='Lista de Productos' pageDescription='' toggleTheme={toggleTheme}>
       <ProductList products={productList} />
     </ShopLayout>
   );

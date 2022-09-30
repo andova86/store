@@ -1,19 +1,33 @@
-import { SearchOutlined, ShoppingCartOutlined } from "@mui/icons-material";
-import { AppBar, Badge, Box, Button, IconButton, Link, Toolbar, Typography } from "@mui/material";
+import { DarkMode, Menu, SearchOutlined, ShoppingCartOutlined } from "@mui/icons-material";
+import { AppBar, Badge, Box, Button, IconButton, Link, Toolbar, Tooltip, Typography } from "@mui/material";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { getAllCategories } from "../../api/categoryApi";
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from 'react-redux'
 import { isOpenMenuSet } from "../../redux/slices";
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import { grey } from "@mui/material/colors";
+import { useThemeShop } from "../hooks/useThemeShop";
 
-export const Navbar = () => {
+
+type HomeProps = {
+    toggleTheme?: React.MouseEventHandler<HTMLButtonElement>;
+  }
+  
+
+export const Navbar = (props: HomeProps) => {
     const [categoryList, setcategoryList] = useState<string[]>([]);
     const router = useRouter();
-    const state = useSelector((state:RootState) => state.theme)
+    const state = useSelector((state: RootState) => state.theme)
     const dispatch = useDispatch()
+    
 
+
+   const { theme, colorMode} = useThemeShop()
 
     useEffect(() => {
         async function getCategories() {
@@ -26,24 +40,26 @@ export const Navbar = () => {
             }
         }
         if (router.isReady) {
-        getCategories();
+            getCategories();
         }
     }, []);
 
     return (
-        <AppBar>
-            <Toolbar>
-                <NextLink href="/" passHref>
-                    <Link display="flex" alignItems="center">
-                        <Typography variant="h6">Andova |</Typography>
+        
+                <AppBar>
+                    <Toolbar>
+                        <NextLink href="/" passHref>
+                            <Link display="flex" alignItems="center">
+                                <Typography variant="h6" >Andova |</Typography>
+                                
 
-                        <Typography sx={{ ml: 0.5 }}>Shop</Typography>
-                    </Link>
-                </NextLink>
+                                <Typography sx={{ ml: 0.5 }}>Shop</Typography>
+                            </Link>
+                        </NextLink>
 
-                <Box flex={1} />
+                        <Box flex={1} />
 
-              {/*   <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                        {/*   <Box sx={{ display: { xs: "none", sm: "block" } }}>
                     <>
                         {categoryList.map((element, pos) => (
                             <NextLink
@@ -61,24 +77,42 @@ export const Navbar = () => {
                     </>
                 </Box> */}
 
-                <Box flex={1} />
+                      {/*   {theme.palette.mode} mode */}
+                        {/* <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+                            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                        </IconButton> */}
 
-                <IconButton>
-                    <SearchOutlined />
-                </IconButton>
-
-                <NextLink href="/cart" passHref>
-                    <Link>
-                        <IconButton>
-                            <Badge badgeContent={2} color="secondary">
-                                <ShoppingCartOutlined />
-                            </Badge>
+                        
+                        <Tooltip title="Cambiar de Modo">
+                        <IconButton onClick={props.toggleTheme}>
+                            <DarkMode />
                         </IconButton>
-                    </Link>
-                </NextLink>
+                        </Tooltip>
 
-                <Button onClick={(e)  => dispatch(isOpenMenuSet(!state.isOpenMenu))}>Menu</Button>
-            </Toolbar>
-        </AppBar>
+                        <IconButton>
+                            <SearchOutlined />
+                        </IconButton>
+
+                        <NextLink href="/cart" passHref>
+                            <Link>
+                                <IconButton>
+                                    <Badge badgeContent={2}>
+                                        <ShoppingCartOutlined />
+                                    </Badge>
+                                </IconButton>
+                            </Link>
+                        </NextLink>
+
+                        <Tooltip title="Abrir menu lateral">
+                        <IconButton onClick={(e) => dispatch(isOpenMenuSet(!state.isOpenMenu))} sx={{ml:2}}>
+                            <Menu/>
+
+                        </IconButton>
+                        </Tooltip>
+
+                       
+                    </Toolbar>
+                </AppBar>
+          
     );
 };

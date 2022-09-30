@@ -7,17 +7,18 @@ import { ItemCounter } from "../../components/ui";
 import { IProductFake } from "../../modules/products/domain/productFake";
 
 interface Props {
-    product: IProductFake;
+    product: IProductFake,
+    toggleTheme: any
 }
 
-const ProductPage: FC<Props> = ({ product }) => {
+const ProductPage: FC<Props> = ({ product, toggleTheme }) => {
     const [listImages, setlistImages] = useState<string[]>([]);
     const [isImageLoaded, setisImageLoaded] = useState(false);
     const router = useRouter();
 
     return (
         <>
-            <ShopLayout title={product.title} pageDescription={product.description}>
+            <ShopLayout title={product.title} pageDescription={product.description} toggleTheme={toggleTheme}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={7}>
                         <Card>
@@ -75,10 +76,10 @@ const ProductPage: FC<Props> = ({ product }) => {
 
                             {/* <Chip label='No hay disponibles' color='error' variant='outlined'/>*/}
                             <Box sx={{ mt: 3 }}>
-                                <Typography variant="subtitle2" color="initial">
+                                <Typography variant="subtitle2" >
                                     Descripción
                                 </Typography>
-                                <Typography variant="body2" color="initial">
+                                <Typography variant="body2" >
                                     {product.description}
                                 </Typography>
                             </Box>
