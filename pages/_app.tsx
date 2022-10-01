@@ -5,10 +5,13 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { Provider } from 'react-redux';
-import { store } from '../redux/store';
+
 import createEmotionCache from '../components/createEmotionCache';
 import { lightTheme } from '../themes/lightTheme';
 import { darkTheme } from '../themes/darkTheme';
+import { persistStore } from 'redux-persist'
+import { store } from '../redux/store';
+import { PersistGate } from 'redux-persist/integration/react'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -16,6 +19,8 @@ const clientSideEmotionCache = createEmotionCache();
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
+
+let persistor = persistStore(store);
 
 export default function MyApp(props: MyAppProps) {
 
@@ -44,7 +49,8 @@ const toggleTheme: React.MouseEventHandler<HTMLAnchorElement> = () => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (
     <Provider store={store}>
-    <CacheProvider value={emotionCache}>
+      <PersistGate loading={null} persistor={persistor}>
+      <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
@@ -54,6 +60,8 @@ const toggleTheme: React.MouseEventHandler<HTMLAnchorElement> = () => {
         <Component {...pageProps} toggleTheme={toggleTheme}/>
       </ThemeProvider>
     </CacheProvider>
+      </PersistGate>
+   
     </Provider>
   );
 }
