@@ -19,6 +19,7 @@ export const Navbar = (props: HomeProps) => {
     const [categoryList, setcategoryList] = useState<string[]>([]);
     const router = useRouter();
     const state = useSelector((state: RootState) => state.theme)
+    const stateCart = useSelector((state: RootState) => state.cart)
     const dispatch = useDispatch()
     
 
@@ -92,7 +93,7 @@ export const Navbar = (props: HomeProps) => {
                         <NextLink href="/cart" passHref>
                             <Link>
                                 <IconButton>
-                                    <Badge badgeContent={2} color="error">
+                                    <Badge badgeContent={stateCart.listProducts.length} color="error">
                                         <ShoppingCartOutlined />
                                     </Badge>
                                 </IconButton>

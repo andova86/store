@@ -52,6 +52,13 @@ const getColorCategory = (cat:string) => {
                             passHref
                             >
                                 <Link>
+{/* 
+                                  <Chip 
+                                  color='primary' 
+                                  label='No disponible' 
+                                  sx={{ position:'absolute', zIndex: 99 , top: '10px' }}
+                                  variant={'outlined'}
+                                  /> */}
                                 <Container>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} display='flex' justifyContent={'end'} sx={{mb:2, mt:1}}>
