@@ -4,9 +4,10 @@ import Grid from "@mui/material/Grid";
 import NextLink from "next/link";
 import { Box, Button, CardActionArea, CardMedia, Container, Divider, Link, Paper } from "@mui/material";
 import { ItemCounter } from "../../../../components/ui";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { CartEmpty } from "../detail/CartEmpty";
+import { removeProductToCart } from "../../../../redux/slices/cart";
 
 interface Props {
     editable: boolean;
@@ -14,7 +15,11 @@ interface Props {
 
 export const CartList: FC<Props> = ({ editable }) => {
     const stateCart = useSelector((state: RootState) => state.cart);
+    const dispatch = useDispatch()
 
+    const handleRemoveProduct = (id: number) => {
+        dispatch(removeProductToCart(id))
+    }
 
     return (
         <>
@@ -75,7 +80,7 @@ export const CartList: FC<Props> = ({ editable }) => {
                                     >{`$${item.product.price}`}</Typography>
 
                                     { }
-                                    <Button variant="text" color="secondary">
+                                    <Button variant="text" color="secondary" onClick={()=> handleRemoveProduct(item.product.id)}>
                                         Remover
                                     </Button>
                                 </Grid>

@@ -23,26 +23,22 @@ export const themeSlice = createSlice({
                 (item) => item.product.id === action.payload.product.id
             );
 
-            console.log('productInCart');
+            console.log("productInCart");
             console.log(productInCart);
-            
+
             if (productInCart.length > 0) {
+                console.log("entro");
 
-                console.log('entro');
-               
-            const updateListProduct = state.listProducts.map((item) => {
-                if (item.product.id !== action.payload.product.id) return item;
+                const updateListProduct = state.listProducts.map((item) => {
+                    if (item.product.id !== action.payload.product.id) return item;
 
-                console.log('entro');
-                
-             
-                item.quantity += action.payload.quantity;
-                return item;
-            });
+                    console.log("entro");
 
-            state.listProducts = updateListProduct;
+                    item.quantity += action.payload.quantity;
+                    return item;
+                });
 
-
+                state.listProducts = updateListProduct;
             } else {
                 let listNew = state.listProducts;
                 listNew.push(action.payload);
@@ -52,18 +48,17 @@ export const themeSlice = createSlice({
             //console.log(action.payload);
         },
 
-        updateProductToCart: (state, action: PayloadAction<IProductCart>) => {
+        updateProductToCart: (state, action: PayloadAction<IProductCart>) => {},
 
-
-            
-
-            
+        removeProductToCart: (state, action: PayloadAction<number>) => {
+            const newList  = state.listProducts.filter(item => item.product.id !== action.payload)
+            state.listProducts = newList
         },
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { resetStateCart, cart_listProductsSet, addProductToCart, updateProductToCart } =
+export const { resetStateCart, cart_listProductsSet, addProductToCart, updateProductToCart,removeProductToCart } =
     themeSlice.actions;
 
 export default themeSlice.reducer;
