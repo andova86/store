@@ -7,7 +7,7 @@ import { getAllCategories } from "../../api/categoryApi";
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from 'react-redux'
 import { isOpenMenuSet } from "../../redux/slices";
-import { useThemeShop } from "../hooks/useThemeShop";
+
 
 
 type HomeProps = {
@@ -21,12 +21,9 @@ export const Navbar = (props: HomeProps) => {
     const state = useSelector((state: RootState) => state.theme)
     const stateCart = useSelector((state: RootState) => state.cart)
     const dispatch = useDispatch()
-    
 
 
-   const { theme, colorMode} = useThemeShop()
-
-    useEffect(() => {
+   /*  useEffect(() => {
         async function getCategories() {
             try {
                 let result = await getAllCategories();
@@ -39,7 +36,7 @@ export const Navbar = (props: HomeProps) => {
         if (router.isReady) {
             getCategories();
         }
-    }, []);
+    }, []); */
 
     return (
         
