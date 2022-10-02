@@ -1,4 +1,4 @@
-import { IProductCart } from "./../../modules/cart/domain/productCart";
+import { IProductCart, IProductUpdateCant } from "./../../modules/cart/domain/productCart";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IInitialCart {
@@ -48,7 +48,17 @@ export const themeSlice = createSlice({
             //console.log(action.payload);
         },
 
-        updateProductToCart: (state, action: PayloadAction<IProductCart>) => {},
+        updateCantProductToCart: (state, action: PayloadAction<IProductUpdateCant>) => {
+          
+           
+                 const updateListProduct = state.listProducts.map((item) => {
+                    if (item.product.id !== action.payload.id) return item;
+                    item.quantity = action.payload.quantity;
+                    return item;
+                });
+
+                state.listProducts = updateListProduct; 
+        },
 
         removeProductToCart: (state, action: PayloadAction<number>) => {
             const newList  = state.listProducts.filter(item => item.product.id !== action.payload)
@@ -58,7 +68,7 @@ export const themeSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { resetStateCart, cart_listProductsSet, addProductToCart, updateProductToCart,removeProductToCart } =
+export const { resetStateCart, cart_listProductsSet, addProductToCart, updateCantProductToCart,removeProductToCart } =
     themeSlice.actions;
 
 export default themeSlice.reducer;

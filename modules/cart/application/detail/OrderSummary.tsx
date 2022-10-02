@@ -3,23 +3,35 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
+import {useState , useEffect} from 'react'
 
 interface Props {}
 
 export const OrderSummary = () => {
 
+    const [totalPrice, settotalPrice] = useState(0)
+
     const stateCart = useSelector((state: RootState) => state.cart);
     
-    const TotalPrice =()=> {
-        let total = 0
+   
 
-        stateCart.listProducts.forEach(item => {
-            total += Number(item.product.price)
+    useEffect(() => {
 
-        })
+        const TotalPrice =()=> {
+            let total = 0
+    
+            stateCart.listProducts.forEach(item => {
+                total += Number(item.product.price) * item.quantity
+    
+            })
+    
+            return total
+        }
 
-        return total
-    }
+        settotalPrice(TotalPrice())
+     
+    }, [stateCart.listProducts])
+    
 
 
     return (
@@ -56,7 +68,7 @@ export const OrderSummary = () => {
         </Grid>
 
         <Grid item xs={6}>
-        <Typography variant="h6">{`$${ TotalPrice() }`}</Typography>
+        <Typography variant="h6">{`$${ totalPrice }`}</Typography>
         </Grid>
     </Grid>
     );

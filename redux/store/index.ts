@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import themeReducer from '../slices/theme'
 import cartReducer from '../slices/cart'
+import checkoutReducer from '../slices/checkout'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 import thunk from 'redux-thunk'
@@ -11,6 +12,7 @@ import {combineReducers} from "redux";
 const reducers = combineReducers({
   cart: cartReducer,
   theme: themeReducer,
+  checkout: checkoutReducer,
 
 });
 

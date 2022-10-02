@@ -5,3 +5,9 @@ export interface IProductCart {
    product: IProductPlatzi,
    quantity: number
 }
+
+export interface IProductUpdateCant {
+   id: number,
+   quantity: number
+
+}
