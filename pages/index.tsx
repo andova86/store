@@ -1,8 +1,7 @@
 import { FC, useState } from 'react';
-import { getAllProducts } from '../api/productsApi';
 import { ShopLayout } from '../components/layouts';
+import { dataProducts } from '../database/productsJSON';
 import { ProductList } from '../modules/products/application/list/ProductList';
-import { GetServerSideProps } from 'next'
 import { IProductFake } from '../modules/products/domain/productFake';
 
 
@@ -19,7 +18,7 @@ const Home: FC<Props> = ({productList, toggleTheme}) => {
 
   return (
     <ShopLayout title='Lista de Productos' pageDescription='' toggleTheme={toggleTheme}>
-      <ProductList products={productList} />
+      <ProductList products={dataProducts} />
     </ShopLayout>
   );
 };
@@ -28,7 +27,7 @@ const Home: FC<Props> = ({productList, toggleTheme}) => {
 // - Only if you need to pre-render a page whose data must be fetched at request time
 
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+/* export const getServerSideProps: GetServerSideProps = async (ctx) => {
  
   const { data } = await getAllProducts() // your fetch function here 
 
@@ -41,10 +40,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-
       productList: data
     }
   }
-}
+} */
 
 export default Home;
