@@ -1,16 +1,20 @@
-import { Card, CardActionArea, CardHeader, CardMedia, Grid, Paper, Typography, Container, Avatar, Chip, Link } from '@mui/material'
-import { FC } from 'react'
+import { Card, CardActionArea, CardHeader, CardMedia, Grid, Paper, Typography, Container, Avatar, Chip, Link, Skeleton } from '@mui/material'
+import { FC, useState } from 'react'
 import { IProductFake } from '../../domain/productFake'
 import NextLink from "next/link"
 
 import styles from './ProductFake.module.css'
 import Image from 'next/image'
+import { IProductPlatzi } from '../../domain/productPlatzi'
 
 
 interface Props {
-    product: IProductFake
+    product: IProductPlatzi
 }
 export const ProductFakeCard: FC<Props> = ({ product }) => {
+
+    const [isImageLoaded, setisImageLoaded] = useState(false);
+
 const getColorCategory = (cat:string) => {
   let category = 'secondary'
   if(cat === 'jewelery')
@@ -63,14 +67,33 @@ const getColorCategory = (cat:string) => {
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} display='flex' justifyContent={'end'} sx={{mb:2, mt:1}}>
                                         {
-                                            getColorCategory(product.category)
+                                            getColorCategory(product.category.name)
                                         }
                                     </Grid>
 
                                     <Grid item xs={12} >
+                                         <Card>
+                            <CardMedia
+                                component="img"
+                              
+                                image={product.images[0]}
+                                alt="green iguana"
+                                sx={{
+                                    objectFit: "cover",
+                                    display: isImageLoaded ? "block" : "none",
+                                }}
+                                onLoad={() => setisImageLoaded(true)}
+                            />
+                        </Card>
 
-                                        <Image src={product.image} layout="responsive" width={250} height={200}
-                                            style={{ borderRadius: '20px' }} objectFit={'contain'} alt={product.title}/>
+                        {isImageLoaded ? (
+                            ""
+                        ) : (
+                            <Skeleton variant="rectangular" width={500} height={200} />
+                        )}
+
+
+                                       
 
                                     </Grid>
 

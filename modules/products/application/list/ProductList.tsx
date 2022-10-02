@@ -1,10 +1,11 @@
-import { Grid } from '@mui/material'
+import { Grid, Pagination } from '@mui/material'
 import { FC } from 'react'
 import { IProductFake } from '../../domain/productFake'
+import { IProductPlatzi } from '../../domain/productPlatzi'
 import { ProductFakeCard } from '../item/ProductFakeCard'
 
 interface Props {
-products: IProductFake[]
+products: IProductPlatzi[]
 }
 
 export const ProductList:FC<Props> = ({ products }) => {
@@ -15,6 +16,8 @@ export const ProductList:FC<Props> = ({ products }) => {
         <ProductFakeCard product={product} key={product.id}/>
       ))
     }
+
+     
   </Grid>
   )
 }

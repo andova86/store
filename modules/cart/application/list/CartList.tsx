@@ -33,13 +33,13 @@ export const CartList: FC<Props> = ({ editable }) => {
                                 <Grid item xs={12}>
                                     <Divider />
                                 </Grid>
-                                <Grid item xs={2}>
+                                <Grid item xs={3}>
                                     <NextLink href={"/product/slug"} passHref>
                                         <Link>
                                             <CardActionArea>
                                                 <CardMedia
                                                     component="img"
-                                                    image={item.product.image}
+                                                    image={item.product.images[0]}
                                                     alt={item.product.title}
                                                     className="fadeIn"
                                                     sx={{ borderRadius: "5px" }}
@@ -49,7 +49,7 @@ export const CartList: FC<Props> = ({ editable }) => {
                                     </NextLink>
                                 </Grid>
 
-                                <Grid item xs={7}>
+                                <Grid item xs={6}>
                                     <Box display={"flex"} flexDirection={"column"}>
                                         <Typography variant="body1" >
                                             {item.product.title}

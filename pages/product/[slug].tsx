@@ -9,15 +9,16 @@ import { AddShoppingCart, Close } from "@mui/icons-material";
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductToCart } from "../../redux/slices/cart";
+import { IProductPlatzi } from "../../modules/products/domain/productPlatzi";
+import { ProductSlideShow } from "../../modules/products/application/list/ProductSlideShow";
 
 interface Props {
-    product: IProductFake;
+    product: IProductPlatzi;
     toggleTheme: any;
 }
 
 const ProductPage: FC<Props> = ({ product, toggleTheme }) => {
-    const [listImages, setlistImages] = useState<string[]>([]);
-    const [isImageLoaded, setisImageLoaded] = useState(false);
+
     const [cantP, setcantP] = useState(1)
     const [open, setOpen] = useState(false);
 
@@ -63,36 +64,12 @@ const ProductPage: FC<Props> = ({ product, toggleTheme }) => {
                 toggleTheme={toggleTheme}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={7}>
-                        <Card>
-                            <CardMedia
-                                component="img"
-                                height="500px"
-                                image={product.image}
-                                alt="green iguana"
-                                sx={{
-                                    objectFit: "contain",
-                                    display: isImageLoaded ? "block" : "none",
-                                }}
-                                onLoad={() => setisImageLoaded(true)}
-                            />
-                        </Card>
 
-                        {isImageLoaded ? (
-                            ""
-                        ) : (
-                            <Skeleton variant="rectangular" width={500} height={500} />
-                        )}
+                        <ProductSlideShow images={product.images} />
                     </Grid>
 
                     <Grid item xs={12} sm={5} >
                         <Box display={"flex"} flexDirection={"column"}>
-                            <Rating
-                                name="half-rating"
-                                value={product.rating.rate}
-                                size="large"
-                                readOnly
-                                sx={{ mb: 2 }}
-                            />
                             <Typography variant="h1" component="h1">
                                 {product.title}
                             </Typography>

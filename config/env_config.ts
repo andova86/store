@@ -3,10 +3,10 @@ const env = process.env.ENV || 'development';
 
 const configEnv = {
   development: {
-    api: 'https://fakestoreapi.com/',
+    api: 'https://api.escuelajs.co/api/v1/',
   },
   production: {
-    api: 'https://fakestoreapi.com/',
+    api: 'https://api.escuelajs.co/api/v1/',
   },
 }[env];
 
