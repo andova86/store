@@ -81,8 +81,8 @@ const ProductPage: FC<Props> = ({ product, toggleTheme }) => {
                                 {product.product_item.product.full_name}
                             </Typography>
 
-                            <Typography variant="subtitle1" component="h2">
-                                {`${product.human_readable_current_price}`}
+                            <Typography variant="h2" sx={{fontWeight:900}}>
+                                {`$ ${product.current_price}`}
                             </Typography>
 
                             <Box sx={{ my: 2 }}>

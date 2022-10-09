@@ -75,10 +75,10 @@ export const CartItem: FC<Props> = ({ item, editable }) => {
                     alignItems={"center"}>
                     <Typography
                         variant="h4"
-                    >{`${item.product.human_readable_current_price}`}</Typography>
+                    >{`$ ${item.product.current_price}`}</Typography>
 
                     { }
-                    <Button variant="text" color="secondary" onClick={() => handleRemoveProduct(item.product.id)}>
+                    <Button variant="text" color="error" onClick={() => handleRemoveProduct(item.product.id)}>
                         Remover
                     </Button>
                 </Grid>

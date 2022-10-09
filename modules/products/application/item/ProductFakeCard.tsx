@@ -1,11 +1,8 @@
-import { Card, CardActionArea, CardHeader, CardMedia, Grid, Paper, Typography, Container, Avatar, Chip, Link, Skeleton } from '@mui/material'
+import { Card, CardActionArea, CardMedia, Grid, Typography, Container, Chip, Link, Skeleton } from '@mui/material'
 import { FC, useState } from 'react'
-import { IProductFake } from '../../domain/productFake'
 import NextLink from "next/link"
 
 import styles from './ProductFake.module.css'
-import Image from 'next/image'
-import { IProductPlatzi } from '../../domain/productPlatzi'
 import { IProductAsere } from '../../domain/product'
 
 
@@ -53,13 +50,13 @@ export const ProductFakeCard: FC<Props> = ({ product }) => {
                             passHref
                         >
                             <Link>
-                                {/* 
+                               
                                   <Chip 
-                                  color='primary' 
-                                  label='No disponible' 
-                                  sx={{ position:'absolute', zIndex: 99 , top: '10px' }}
+                                  color='secondary' 
+                                  label={product.product_item.product.category.name} 
+                                  sx={{ position:'absolute', zIndex: 99 , top: '10px', left: '10px' }}
                                   variant={'outlined'}
-                                  /> */}
+                                  /> 
 
                                 <Grid container spacing={2}>
                                     {/* <Grid item xs={12} display='flex' justifyContent={'end'} sx={{mb:2, mt:1}}>
@@ -104,7 +101,7 @@ export const ProductFakeCard: FC<Props> = ({ product }) => {
                                             <Typography variant="body1" >{product.product_item.product.full_name}</Typography>
                                             <Typography variant="caption" color={'GrayText'}>{product.product_item.product.short_description}</Typography>
 
-                                            <Typography variant="h5" sx={{fontWeight:700, my:2}}>{`${product.human_readable_current_price}`}</Typography>
+                                            <Typography variant="h5" sx={{fontWeight:700, my:2}}>{`$${product.current_price}`}</Typography>
 
 
                                         </Container>
