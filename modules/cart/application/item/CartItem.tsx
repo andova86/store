@@ -39,8 +39,8 @@ export const CartItem: FC<Props> = ({ item, editable }) => {
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
-                                    image={item.product.images[0]}
-                                    alt={item.product.title}
+                                    image={item.product.product_item.product.product_image}
+                                    alt={item.product.product_item.product.full_name}
                                     className="fadeIn"
                                     sx={{ borderRadius: "5px" }}
                                 />
@@ -52,7 +52,7 @@ export const CartItem: FC<Props> = ({ item, editable }) => {
                 <Grid item xs={6}>
                     <Box display={"flex"} flexDirection={"column"}>
                         <Typography variant="body1" >
-                            {item.product.title}
+                            {item.product.product_item.product.full_name}
                         </Typography>
                         {editable ? (
                             <ItemCounter
@@ -75,7 +75,7 @@ export const CartItem: FC<Props> = ({ item, editable }) => {
                     alignItems={"center"}>
                     <Typography
                         variant="h4"
-                    >{`$${item.product.price}`}</Typography>
+                    >{`${item.product.human_readable_current_price}`}</Typography>
 
                     { }
                     <Button variant="text" color="secondary" onClick={() => handleRemoveProduct(item.product.id)}>

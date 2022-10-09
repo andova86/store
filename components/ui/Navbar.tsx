@@ -44,10 +44,10 @@ export const Navbar = (props: HomeProps) => {
                     <Toolbar>
                         <NextLink href="/" passHref>
                             <Link display="flex" alignItems="center">
-                                <Typography variant="h6" >Andova |</Typography>
+                                <Typography variant="h6" >Asere |</Typography>
                                 
 
-                                <Typography sx={{ ml: 0.5 }}>Shop</Typography>
+                                <Typography sx={{ ml: 0.5 }}>Market</Typography>
                             </Link>
                         </NextLink>
 

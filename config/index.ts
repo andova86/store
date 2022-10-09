@@ -1,9 +1,10 @@
-import Axios  from "axios";
+import Axios, { AxiosInstance }  from "axios";
 import configEnv from "./env_config";
 
 
-export const intanceAxios = Axios.create({
+export const intanceAxios : AxiosInstance = Axios.create({
     baseURL: configEnv?.api,
+    //headers: {'Access-Control-Allow-Origin': '*'}
 });
 
 

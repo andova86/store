@@ -2,8 +2,8 @@
 
 import { intanceAxios } from "../config";
 
-export async function getAllProducts(start:number) {
-    const res = await intanceAxios.get(`products?offset=${start}&limit=10`);
+export async function getAllProducts(length:number , page:number) {
+    const res = await intanceAxios.get(`inventory/frontproducts/?page=${page}&length=${length}`);
     const data = await res.data;
 
     if (!data) {
@@ -18,7 +18,7 @@ export async function getAllProducts(start:number) {
 }
 
 export async function getProductById(id: number) {
-    const res = await intanceAxios.get(`products/${id}`);
+    const res = await intanceAxios.get(`inventory/frontproducts/${id}/`);
 
     const data = await res.data;
     console.log(data);

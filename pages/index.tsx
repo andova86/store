@@ -5,56 +5,61 @@ import { getAllProducts } from '../api/productsApi';
 import { ShopLayout } from '../components/layouts';
 import { dataProducts } from '../database/productsJSON';
 import { ProductList } from '../modules/products/application/list/ProductList';
+import { IProductAsere } from '../modules/products/domain/product';
 import { IProductFake } from '../modules/products/domain/productFake';
 import { IProductPlatzi } from '../modules/products/domain/productPlatzi';
 
 
 interface Props {
- productList: IProductPlatzi[],
- toggleTheme: any
+  productList: IProductAsere[],
+  toggleTheme: any,
+  num_pages: number
 
 }
 
-const Home: FC<Props> = ({productList, toggleTheme}) => {
+const Home: FC<Props> = ({ productList, toggleTheme , num_pages}) => {
 
   const [showLoading, setShowLoading] = useState(false)
   const [list, setList] = useState(productList)
+  const [countPages, setcountPages] = useState(num_pages)
 
   const [page, setPage] = useState(1);
-  const handleChange = async(event: ChangeEvent<unknown>, value: number) => {
+
+  const handleChange = async (event: ChangeEvent<unknown>, value: number) => {
     console.log(value);
-    
+
     setShowLoading(true)
     try {
-      let result = await getAllProducts(value === 1 ? 0 : value * 10)
+      let result = await getAllProducts(10 , value)
 
       setList(result.data)
+      setcountPages(result.data.num_pages)
       setPage(value);
       setShowLoading(false)
-      
+
     } catch (error) {
       console.log(error);
       setShowLoading(false)
-      
-      
+
+
     }
   };
- 
+
 
   return (
     <ShopLayout title='Lista de Productos' pageDescription='' toggleTheme={toggleTheme}>
       <ProductList products={list} />
       <Box display={'flex'} justifyContent={'center'} my={3}>
-      <Pagination count={10} color="primary" onChange={handleChange}/>
+        <Pagination count={countPages} color="primary" onChange={handleChange} />
       </Box>
-     
-<Backdrop
-  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-  open={showLoading}
- 
->
-  <CircularProgress color="inherit" />
-</Backdrop>
+
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={showLoading}
+
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </ShopLayout>
   );
 };
@@ -63,11 +68,11 @@ const Home: FC<Props> = ({productList, toggleTheme}) => {
 // - Only if you need to pre-render a page whose data must be fetched at request time
 
 
- export const getServerSideProps: GetServerSideProps = async (ctx) => {
- 
-  const { data } = await getAllProducts(0) // your fetch function here 
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
-  if (!data) {
+  const result = await getAllProducts(10, 1) // your fetch function here 
+
+  if (!result) {
     return {
       notFound: true,
     }
@@ -76,9 +81,10 @@ const Home: FC<Props> = ({productList, toggleTheme}) => {
 
   return {
     props: {
-      productList: data
+      productList: result.data.results,
+      num_pages: result.data.num_pages
     }
   }
-} 
+}
 
 export default Home;

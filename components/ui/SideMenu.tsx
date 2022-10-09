@@ -3,11 +3,39 @@ import { AccountCircleOutlined, AdminPanelSettings, CategoryOutlined, Confirmati
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from "../../redux/store"
 import { isOpenMenuSet } from "../../redux/slices"
+import { useRouter } from "next/router"
+import { postLogout } from "../../api/userApi"
 
 export const SideMenu = () => {
 
-    const state = useSelector((state:RootState) => state.theme)
+    const state = useSelector((state: RootState) => state.theme)
+    const stateUser = useSelector((state: RootState) => state.user)
     const dispatch = useDispatch()
+    const router = useRouter()
+
+    const navigateTo = ( url : string ) => {
+
+        dispatch(isOpenMenuSet(!state.isOpenMenu))
+        router.push(url)
+
+    }
+
+    const onLogout = async () => {
+        navigateTo(`/auth/login?p=${ router.asPath }`)
+
+       /*  try {
+            let result = await postLogout()
+            console.log(result);
+            
+        } catch (error) {
+            console.log(error);
+            
+            
+        } */
+
+
+    }
+
 
 
     return (
@@ -15,7 +43,7 @@ export const SideMenu = () => {
             open={state.isOpenMenu}
             anchor='right'
             sx={{ backdropFilter: 'blur(4px)', transition: 'all 0.5s ease-out' }}
-            onClose={() => {dispatch(isOpenMenuSet(!state.isOpenMenu))}}
+            onClose={() => { dispatch(isOpenMenuSet(!state.isOpenMenu)) }}
         >
             <Box sx={{ width: 250, paddingTop: 5 }}>
 
@@ -37,20 +65,29 @@ export const SideMenu = () => {
                         />
                     </ListItem>
 
-                    <ListItem button>
-                        <ListItemIcon>
-                            <AccountCircleOutlined />
-                        </ListItemIcon>
-                        <ListItemText primary={'Perfil'} />
-                    </ListItem>
 
-                    <ListItem button>
-                        <ListItemIcon>
-                            <ConfirmationNumberOutlined />
-                        </ListItemIcon>
-                        <ListItemText primary={'Mis Ordenes'} />
-                    </ListItem>
+                    {
 
+                        stateUser.isLoggedIn ?
+                            <>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <AccountCircleOutlined />
+                                    </ListItemIcon>
+                                    <ListItemText primary={'Perfil'} onClick={() => navigateTo('/')}/>
+                                </ListItem>
+
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <ConfirmationNumberOutlined />
+                                    </ListItemIcon>
+                                    <ListItemText primary={'Mis Ordenes'} />
+                                </ListItem>
+
+                            </> : ""
+                    }
+
+                    {/* 
 
                     <ListItem button sx={{ display: { xs: '', sm: 'none' } }}>
                         <ListItemIcon>
@@ -71,26 +108,35 @@ export const SideMenu = () => {
                             <EscalatorWarningOutlined />
                         </ListItemIcon>
                         <ListItemText primary={'Niños'} />
-                    </ListItem>
+                    </ListItem> */}
+
+                    {
+                        stateUser.isLoggedIn ?
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <LoginOutlined />
+                                </ListItemIcon>
+                                <ListItemText primary={'Salir'}  onClick={() => onLogout()}/>
+                            </ListItem> :
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <VpnKeyOutlined />
+                                </ListItemIcon>
+                                <ListItemText primary={'Ingresar'} onClick={() => navigateTo(`/auth/login?p=${ router.asPath }`)}/>
+                            </ListItem>
 
 
-                    <ListItem button>
-                        <ListItemIcon>
-                            <VpnKeyOutlined />
-                        </ListItemIcon>
-                        <ListItemText primary={'Ingresar'} />
-                    </ListItem>
+                    }
 
-                    <ListItem button>
-                        <ListItemIcon>
-                            <LoginOutlined />
-                        </ListItemIcon>
-                        <ListItemText primary={'Salir'} />
-                    </ListItem>
+
+
 
 
                     {/* Admin */}
+
                     <Divider />
+
+
                     <ListSubheader>Admin Panel</ListSubheader>
 
                     <ListItem button>

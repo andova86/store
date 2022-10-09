@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['fakestoreapi.com','https://fakestoreapi.com/','api.lorem.space','https://api.lorem.space'],
+    domains: ['asere-services.com','https://asere-services.com/','api.lorem.space','https://api.lorem.space'],
   },
   staticPageGenerationTimeout: 1500
 }

@@ -1,8 +1,7 @@
-import { IProductPlatzi } from './../../products/domain/productPlatzi';
-import { IProductFake } from './../../products/domain/productFake';
+import { IProductAsere } from '../../products/domain/product';
 
 export interface IProductCart {
-   product: IProductPlatzi,
+   product: IProductAsere,
    quantity: number
 }
 

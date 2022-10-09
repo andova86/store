@@ -6,13 +6,14 @@ import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 import thunk from 'redux-thunk'
 import {combineReducers} from "redux";
-
+import userReducer from '../slices/user'
 
 
 const reducers = combineReducers({
   cart: cartReducer,
   theme: themeReducer,
   checkout: checkoutReducer,
+  user: userReducer
 
 });
 

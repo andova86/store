@@ -13,6 +13,10 @@ import { persistStore } from 'redux-persist'
 import { store } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react'
 
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -61,6 +65,18 @@ const toggleTheme: React.MouseEventHandler<HTMLAnchorElement> = () => {
       </ThemeProvider>
     </CacheProvider>
       </PersistGate>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+      />
    
     </Provider>
   );
