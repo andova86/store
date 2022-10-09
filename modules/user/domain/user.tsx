@@ -13,11 +13,13 @@ export interface ILogin {
 }
 
 export interface IRegisterUser {
-    name: string;
+    first_name: string;
+    last_name: string,
+    birthdate: string,
+    phone_number: string,
     email: string;
-    password: string;
-    role: string,
-    avatar: string
+    password1: string;
+    password2: string;
 }
 
 export interface ILoginUser {

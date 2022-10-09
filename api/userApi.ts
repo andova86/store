@@ -1,4 +1,4 @@
-import { ILogin } from './../modules/user/domain/user';
+import { ILogin, IRegisterUser } from './../modules/user/domain/user';
 //ENDPOINT PARA OBTENER EL LISTADO DE PRODUCTOS
 
 import { intanceAxios } from "../config";
@@ -69,8 +69,8 @@ export async function postLogout() {
     }
 }
  
-export async function postRegisterUser(dataLogin: any) {
-    const res = await intanceAxios.post('users/', dataLogin);
+export async function postRegisterUser(dataLogin: IRegisterUser) {
+    const res = await intanceAxios.post('auth/registration/', dataLogin);
 
     const data = await res.data;
     console.log(data);

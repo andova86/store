@@ -1,7 +1,7 @@
 import Head from "next/head"
 import { FC } from "react"
 import { Box } from "@mui/material"
-
+import stylesLayout from "./AuthLayout.module.css"
 
 
 interface Props {
@@ -18,10 +18,7 @@ export const AuthLayout: FC<Props> = ({ children, title}) => {
 
     <main>
         <Box 
-        display={'flex'}
-        justifyContent="center" 
-        alignItems="center"     
-        minHeight={'100vh'}
+        className={stylesLayout.authLayout}
         >
             { children }
           

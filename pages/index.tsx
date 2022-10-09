@@ -3,11 +3,8 @@ import { GetServerSideProps } from 'next';
 import { FC, useState, ChangeEvent } from 'react';
 import { getAllProducts } from '../api/productsApi';
 import { ShopLayout } from '../components/layouts';
-import { dataProducts } from '../database/productsJSON';
 import { ProductList } from '../modules/products/application/list/ProductList';
 import { IProductAsere } from '../modules/products/domain/product';
-import { IProductFake } from '../modules/products/domain/productFake';
-import { IProductPlatzi } from '../modules/products/domain/productPlatzi';
 
 
 interface Props {

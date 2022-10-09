@@ -1,16 +1,16 @@
+import { Box } from "@mui/material";
 import Head from "next/head"
 import { FC } from "react"
 import { Navbar, SideMenu } from "../ui";
-
 interface Props {
-  children:any;
+  children: any;
   title: string;
   pageDescription: string;
   imageFullUrl?: string;
   toggleTheme?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export const ShopLayout:FC<Props> = ({children, title, pageDescription, imageFullUrl, toggleTheme }) => {
+export const ShopLayout: FC<Props> = ({ children, title, pageDescription, imageFullUrl, toggleTheme }) => {
   return (
     <>
       <Head>
@@ -27,17 +27,17 @@ export const ShopLayout:FC<Props> = ({children, title, pageDescription, imageFul
 
       </Head>
       <nav>
-        <Navbar toggleTheme={toggleTheme}/>
+        <Navbar toggleTheme={toggleTheme} />
       </nav>
 
-      <SideMenu/>
+      <SideMenu />
 
       <main style={{
         margin: '80px auto',
         maxWidth: '1440px',
         padding: '0px 30px'
-
       }}>
+
         {children}
 
       </main>

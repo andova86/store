@@ -1,8 +1,6 @@
-import { Grid, Pagination } from '@mui/material'
+import { Grid } from '@mui/material'
 import { FC } from 'react'
 import { IProductAsere } from '../../domain/product'
-import { IProductFake } from '../../domain/productFake'
-import { IProductPlatzi } from '../../domain/productPlatzi'
 import { ProductFakeCard } from '../item/ProductFakeCard'
 
 interface Props {

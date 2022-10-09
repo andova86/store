@@ -5,6 +5,8 @@ import NextLink from "next/link";
 import {
     Backdrop,
     Button,
+    Card,
+    CardMedia,
     CircularProgress,
     Container,
     Grid,
@@ -25,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { isLoggedInSet, userAddAccesToken, userAddRefreshToken, userAddSet } from "../../redux/slices/user";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const LoginPage = () => {
 
@@ -51,7 +54,7 @@ const LoginPage = () => {
 
             let result = await postLogin(dataL);
             console.log(result.data);
-           
+
             setShowLoading(false)
             dispatch(isLoggedInSet(true))
 
@@ -60,11 +63,11 @@ const LoginPage = () => {
             dispatch(userAddRefreshToken(result.data.refresh_token))
 
             toast.success("Se inicio sesión correctamente")
-           
+
             const destination = router.query.p?.toString() || '/'
             router.replace(destination)
 
-           // setshowMessage({message:'Se inicio sesión correctamente', type:"success"})
+            // setshowMessage({message:'Se inicio sesión correctamente', type:"success"})
         } catch (error) {
             console.log(error);
             setShowLoading(false)
@@ -81,114 +84,205 @@ const LoginPage = () => {
         event.preventDefault();
     };
 
-    
+
 
     return (
         <AuthLayout title="Iniciar sesión">
             <Container>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Grid
-                    container
-                    spacing={1}
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    alignContent="center"
-                    wrap="wrap"
-                    sx={{ minHeight: "100vh" }}>
-                    <Grid item xs={12} md={8} lg={5}>
-                        <Paper sx={{ p: 2 }} elevation={8}>
-                            <Typography variant="h1" component={"h1"} color="primary">
-                                Inicio de Sesión
-                            </Typography>
-                            <Grid container spacing={2} sx={{ pt: 4 }}>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        label="Correo"
-                                        variant="outlined"
-                                        fullWidth
-                                        {...register("email", {
-                                            required: "El correo es requerido.",
-                                            validate: validations.isEmail
-                                        })}
-                                        error={!!errors.email}
-                                        helperText={errors.email ? errors.email.message : ""}
-                                        type={'email'}
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        label="Contraseña"
-                                        variant="outlined"
-                                        fullWidth
-                                        {...register("password", {
-                                            required: true,
-                                            
-                                        })}
-                                        error={!!errors.password}
-                                        type={showPassword ? "text" : "password"}
-                                        helperText={
-                                            errors.password ? "La Contraseña es requerida." : ""
-                                        }
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton
-                                                        aria-label="toggle password visibility"
-                                                        onClick={handleClickShowPassword}
-                                                        onMouseDown={handleMouseDownPassword}
-                                                        edge="end">
-                                                        {showPassword ? (
-                                                            <VisibilityOff />
-                                                        ) : (
-                                                            <Visibility />
-                                                        )}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-                                </Grid>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Grid
+                        container
+                        spacing={1}
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                        alignContent="center"
+                        wrap="wrap"
+                        sx={{ minHeight: "100vh" }}>
+                     {/*    <Grid item xs={12} md={6} >
+                            <Paper sx={{ p: 2 }} elevation={8}>
+                                <Typography variant="h1" component={"h1"} color="primary">
+                                    Inicio de Sesión
+                                </Typography>
+                                <Grid container spacing={2} sx={{ pt: 4 }}>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            label="Correo"
+                                            variant="outlined"
+                                            fullWidth
+                                            {...register("email", {
+                                                required: "El correo es requerido.",
+                                                validate: validations.isEmail
+                                            })}
+                                            error={!!errors.email}
+                                            helperText={errors.email ? errors.email.message : ""}
+                                            type={'email'}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            label="Contraseña"
+                                            variant="outlined"
+                                            fullWidth
+                                            {...register("password", {
+                                                required: true,
 
-                                <Grid item xs={12} sm={12}>
-                                    <Box display={"flex"} justifyContent={"center"}>
-                                        <Button
-                                            color="primary"
-                                            size="large"
-                                            type="submit"
-                                            sx={{ borderRadius: 20 }}>
-                                            Entrar
-                                        </Button>
+                                            })}
+                                            error={!!errors.password}
+                                            type={showPassword ? "text" : "password"}
+                                            helperText={
+                                                errors.password ? "La Contraseña es requerida." : ""
+                                            }
+                                            InputProps={{
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            aria-label="toggle password visibility"
+                                                            onClick={handleClickShowPassword}
+                                                            onMouseDown={handleMouseDownPassword}
+                                                            edge="end">
+                                                            {showPassword ? (
+                                                                <VisibilityOff />
+                                                            ) : (
+                                                                <Visibility />
+                                                            )}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                        />
+                                    </Grid>
+
+                                    <Grid item xs={12} sm={12}>
+                                        <Box display={"flex"} justifyContent={"center"}>
+                                            <Button
+                                                color="primary"
+                                                size="large"
+                                                type="submit"
+                                                sx={{ borderRadius: 20 }}>
+                                                Entrar
+                                            </Button>
+                                        </Box>
+                                    </Grid>
+
+                                    <Grid item xs={12} sm={12}>
+                                        <NextLink href={router.query.p ? `/auth/register?p=${router.query.p}` : '/auth/register'} passHref>
+                                            <Link>
+
+                                                <Box display={'flex'} justifyContent={'end'} >
+                                                    No tienes cuenta ?
+                                                </Box>
+                                            </Link>
+                                        </NextLink>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </Grid> */}
+
+                        <Grid item xs={12} md={8} >
+                        <Card sx={{display: { xs: 'block', sm: 'flex' }}} elevation={8}>
+                                    <CardMedia
+                                        component="img"
+                                        sx={{ width: 350, py:2}}
+                                        image="/login.svg"
+                                        alt="green iguana"
+                                    />
+
+                                    <Box sx={{ p: 2 }} >
+                                        <Typography variant="h1" component={"h1"} color="primary">
+                                            Inicio de Sesión
+                                        </Typography>
+                                        <Grid container spacing={2} sx={{ pt: 4 }}>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    label="Correo"
+                                                    variant="outlined"
+                                                    fullWidth
+                                                    {...register("email", {
+                                                        required: "El correo es requerido.",
+                                                        validate: validations.isEmail
+                                                    })}
+                                                    error={!!errors.email}
+                                                    helperText={errors.email ? errors.email.message : ""}
+                                                    type={'email'}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    label="Contraseña"
+                                                    variant="outlined"
+                                                    fullWidth
+                                                    {...register("password", {
+                                                        required: true,
+
+                                                    })}
+                                                    error={!!errors.password}
+                                                    type={showPassword ? "text" : "password"}
+                                                    helperText={
+                                                        errors.password ? "La Contraseña es requerida." : ""
+                                                    }
+                                                    InputProps={{
+                                                        endAdornment: (
+                                                            <InputAdornment position="end">
+                                                                <IconButton
+                                                                    aria-label="toggle password visibility"
+                                                                    onClick={handleClickShowPassword}
+                                                                    onMouseDown={handleMouseDownPassword}
+                                                                    edge="end">
+                                                                    {showPassword ? (
+                                                                        <VisibilityOff />
+                                                                    ) : (
+                                                                        <Visibility />
+                                                                    )}
+                                                                </IconButton>
+                                                            </InputAdornment>
+                                                        ),
+                                                    }}
+                                                />
+                                            </Grid>
+
+                                            <Grid item xs={12} sm={12}>
+                                                <Box display={"flex"} justifyContent={"center"}>
+                                                    <Button
+                                                        color="primary"
+                                                        size="large"
+                                                        type="submit"
+                                                        sx={{ borderRadius: 20 }}>
+                                                        Entrar
+                                                    </Button>
+                                                </Box>
+                                            </Grid>
+
+                                            <Grid item xs={12} sm={12}>
+                                                <NextLink href={router.query.p ? `/auth/register?p=${router.query.p}` : '/auth/register'} passHref>
+                                                    <Link>
+
+                                                        <Box display={'flex'} justifyContent={'end'} >
+                                                            No tienes cuenta ?
+                                                        </Box>
+                                                    </Link>
+                                                </NextLink>
+                                            </Grid>
+                                        </Grid>
                                     </Box>
-                                </Grid>
 
-                                <Grid item xs={12} sm={12}>
-                                    <NextLink href={router.query.p ? `/auth/register?p=${router.query.p}`: '/auth/register'} passHref>
-                                        <Link>
 
-                                            <Box display={'flex'} justifyContent={'end'} >
-                                            No tienes cuenta ?
-                                            </Box>
-                                        </Link>
-                                    </NextLink>
-                                </Grid>
-                            </Grid>
-                        </Paper>
+                                </Card>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </form>
+                </form>
 
-            <Backdrop
-                sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={showLoading}>
-                <CircularProgress color="inherit"/>
-            </Backdrop>
-            
-            
-        </Container>
+                <Backdrop
+                    sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={showLoading}>
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+
+
+            </Container>
 
         </AuthLayout>
-        
+
     );
 };
 
