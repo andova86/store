@@ -5,6 +5,7 @@ import { RootState } from "../../redux/store"
 import { isOpenMenuSet } from "../../redux/slices"
 import { useRouter } from "next/router"
 import { postLogout } from "../../api/userApi"
+import { resetStateUser } from "../../redux/slices/user"
 
 export const SideMenu = () => {
 
@@ -21,17 +22,20 @@ export const SideMenu = () => {
     }
 
     const onLogout = async () => {
-        navigateTo(`/auth/login?p=${ router.asPath }`)
-
-       /*  try {
+       
+         try {
             let result = await postLogout()
             console.log(result);
+            dispatch(resetStateUser())
+            navigateTo(`/auth/login?p=${ router.asPath }`)
+            
+
             
         } catch (error) {
             console.log(error);
             
             
-        } */
+        } 
 
 
     }

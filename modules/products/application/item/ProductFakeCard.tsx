@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardMedia, Grid, Typography, Container, Chip, Link, Skeleton } from '@mui/material'
+import { Card, CardActionArea, CardMedia, Grid, Typography, Container, Chip, Link, Skeleton, Box, CardContent, CardActions, Button } from '@mui/material'
 import { FC, useState } from 'react'
 import NextLink from "next/link"
 
@@ -50,14 +50,14 @@ export const ProductFakeCard: FC<Props> = ({ product }) => {
                             passHref
                         >
                             <Link>
-                               
-                                  <Chip 
-                                  color='secondary' 
-                                  label={product.product_item.product.category.name} 
-                                  sx={{ position:'absolute', zIndex: 99 , top: '10px', left: '10px' }}
-                                  variant={'outlined'}
-                                  /> 
 
+                                {/*  <Chip
+                                    color='secondary'
+                                    label={product.product_item.product.category.name}
+                                    sx={{ position: 'absolute', zIndex: 99, top: '10px', right: '10px' }}
+                                    variant={'outlined'}
+                                />
+ */}
                                 <Grid container spacing={2}>
                                     {/* <Grid item xs={12} display='flex' justifyContent={'end'} sx={{mb:2, mt:1}}>
                                         {
@@ -66,29 +66,80 @@ export const ProductFakeCard: FC<Props> = ({ product }) => {
                                     </Grid> */}
 
                                     <Grid item xs={12} >
-                                        
-                                            <CardMedia
+                                        <Box display={'flex'} justifyContent={'end'} sx={{ p: 1 }}>
+                                            <Chip
+                                                color='secondary'
+                                                label={product.product_item.product.category.name}
+
+                                                variant={'outlined'}
+                                            />
+                                        </Box>
+                                    </Grid>
+
+                                    <Grid item xs={12} >
+
+
+                                        {/*  <Card sx={{height:250, maxHeight:250}} elevation={0}>
+                                            
+                                        <CardMedia
                                                 component="img"
 
                                                 image={product.product_item.product.product_image}
                                                 alt={product.product_item.product.name}
-                                                height="250"
-                                                width="220"
+                                                 
                                                 sx={{
-                                                    objectFit: "contain", 
-                                                    borderRadius: 5 ,
-                                                    mt:2,
+                                                   
+                                                   
                                                     
                                                     display: isImageLoaded ? "block" : "none",
                                                 }}
                                                 onLoad={() => setisImageLoaded(true)}
                                             />
-                                       
+                                        </Card>
+                                        */}
+
+                                        <Card sx={{ maxWidth: 345 }} elevation={6}>
+                                            <CardActionArea>
+                                                <CardMedia
+                                                    component="img"
+                                                    height="200"
+                                                    image={product.product_item.product.product_image}
+                                                    alt="green iguana"
+                                                    sx={{ objectPosition: 'top', objectFit: 'contain', 
+                                                    minHeight: '200', maxWidth:'100%',
+                                                    display: isImageLoaded ? "block" : "none"}}
+                                                   
+                                                    onLoad={() => setisImageLoaded(true)}
+                                                
+                                                
+                                                />
+                                                <CardContent>
+                                                    
+ 
+
+
+                                                    <Typography gutterBottom variant="h5" component="div">
+                                                        {product.product_item.product.full_name}
+                                                    </Typography>
+                                                    <Typography variant="body2" color="text.secondary">
+                                                        {product.product_item.product.short_description}
+                                                    </Typography>
+
+                                                    <Typography variant="h5" sx={{ fontWeight: 700, my: 2 }}>{`$${product.current_price}`}</Typography>
+
+                                                </CardContent>
+                                            </CardActionArea>
+
+                                        </Card>
 
                                         {isImageLoaded ? (
                                             ""
                                         ) : (
-                                            <Skeleton variant="rectangular" width={250} height={220} />
+                                            <Box display={'flex'} justifyContent={'center'}>
+                                                <Skeleton variant="rectangular" width={250} height={220} />
+
+                                            </Box>
+
                                         )}
 
 
@@ -96,17 +147,6 @@ export const ProductFakeCard: FC<Props> = ({ product }) => {
 
                                     </Grid>
 
-                                    <Grid item xs={12}>
-                                        <Container>
-                                            <Typography variant="body1" >{product.product_item.product.full_name}</Typography>
-                                            <Typography variant="caption" color={'GrayText'}>{product.product_item.product.short_description}</Typography>
-
-                                            <Typography variant="h5" sx={{fontWeight:700, my:2}}>{`$${product.current_price}`}</Typography>
-
-
-                                        </Container>
-
-                                    </Grid>
 
                                 </Grid>
 
