@@ -1,30 +1,16 @@
-import { Paper } from "@mui/material";
+import { FC, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import { useState, useEffect } from "react";
 
-interface Props {}
+interface Props {
+    cantProducts: number;
+    totalPrice: string;
+}
 
-export const OrderSummary = () => {
-    const [totalPrice, settotalPrice] = useState(0);
-
+export const OrderSummary: FC<Props> = ({ cantProducts, totalPrice }) => {
     const stateCart = useSelector((state: RootState) => state.cart);
-
-    useEffect(() => {
-        const TotalPrice = () => {
-            let total = 0;
-
-            stateCart.listProducts.forEach((item) => {
-                total += Number(item.product.current_price) * item.quantity;
-            });
-
-            return total;
-        };
-
-        settotalPrice(TotalPrice());
-    }, [stateCart.listProducts]);
 
     return (
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -34,8 +20,7 @@ export const OrderSummary = () => {
 
             <Grid item xs={6}>
                 <Typography>
-                    {stateCart.listProducts.length}{" "}
-                    {stateCart.listProducts.length > 1 ? "productos" : "producto"}
+                    {cantProducts} {cantProducts > 1 ? "artículos" : "artículo"}
                 </Typography>
             </Grid>
 
@@ -60,7 +45,7 @@ export const OrderSummary = () => {
             </Grid>
 
             <Grid item xs={6}>
-                <Typography variant="h6">{`$${totalPrice}`}</Typography>
+                <Typography variant="h4">{`${totalPrice}`}</Typography>
             </Grid>
         </Grid>
     );

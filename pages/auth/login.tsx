@@ -13,7 +13,6 @@ import {
     IconButton,
     InputAdornment,
     Link,
-    Paper,
     TextField,
     Typography,
 } from "@mui/material";
@@ -25,17 +24,23 @@ import { AuthLayout } from "../../components/layouts";
 import { validations } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { isLoggedInSet, userAddAccesToken, userAddRefreshToken, userAddSet } from "../../redux/slices/user";
+import {
+    isLoggedInSet,
+    userAddAccesToken,
+    userAddRefreshToken,
+    userAddSet,
+} from "../../redux/slices/user";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import { getAllCartProducts } from "../../api/cartApi";
+import { getAllErrorsInObjectAsString } from "../../config/utils";
+import { cartDataSet, resetStateCart } from "../../redux/slices/cart";
 
 const LoginPage = () => {
-
     const [showPassword, setshowPassword] = useState(false);
     const [showLoading, setShowLoading] = useState(false);
-    const state = useSelector((state: RootState) => state.user)
-    const dispatch = useDispatch()
-    const router = useRouter()
+    const state = useSelector((state: RootState) => state.user);
+    const dispatch = useDispatch();
+    const router = useRouter();
 
     const {
         register,
@@ -49,29 +54,43 @@ const LoginPage = () => {
         console.log(data);
 
         try {
-            setShowLoading(true)
+            setShowLoading(true);
             const dataL = { email: data.email, password: data.password };
 
             let result = await postLogin(dataL);
             console.log(result.data);
 
-            setShowLoading(false)
-            dispatch(isLoggedInSet(true))
+            setShowLoading(false);
+            dispatch(isLoggedInSet(true));
 
-            dispatch(userAddSet(result.data.user))
-            dispatch(userAddAccesToken(result.data.access_token))
-            dispatch(userAddRefreshToken(result.data.refresh_token))
+            dispatch(userAddSet(result.data.user));
+            dispatch(userAddAccesToken(result.data.access_token));
+            dispatch(userAddRefreshToken(result.data.refresh_token));
 
-            toast.success("Se inicio sesión correctamente")
+            toast.success("Se inicio sesión correctamente");
 
-            const destination = router.query.p?.toString() || '/'
-            router.replace(destination)
+            const resultCart = await getAllCartProducts(result.data.access_token);
+
+            console.log(resultCart.data);
+
+            if (resultCart.data.length > 0) {
+                dispatch(cartDataSet(resultCart.data[0]));
+            } else {
+                dispatch(resetStateCart());
+            }
+
+            //dispatch(cartDataSet(resultCart.data));
+
+            const destination = router.query.p?.toString() || "/";
+            router.replace(destination);
 
             // setshowMessage({message:'Se inicio sesión correctamente', type:"success"})
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
-            setShowLoading(false)
-            toast.error("Error al iniciar la sesión. Intente nuevamente")
+            setShowLoading(false);
+
+            toast.error(getAllErrorsInObjectAsString(error.response.data));
+            //toast.error("Error al iniciar la sesión. Intente nuevamente")
             //setshowMessage({message:'Error al mostrar', type:"error"})
         }
     };
@@ -84,10 +103,8 @@ const LoginPage = () => {
         event.preventDefault();
     };
 
-
-
     return (
-        <AuthLayout title="Iniciar sesión">
+        <AuthLayout title="Iniciar sesión | Asere Market">
             <Container>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Grid
@@ -99,175 +116,105 @@ const LoginPage = () => {
                         alignContent="center"
                         wrap="wrap"
                         sx={{ minHeight: "100vh" }}>
-                     {/*    <Grid item xs={12} md={6} >
-                            <Paper sx={{ p: 2 }} elevation={8}>
-                                <Typography variant="h1" component={"h1"} color="primary">
-                                    Inicio de Sesión
-                                </Typography>
-                                <Grid container spacing={2} sx={{ pt: 4 }}>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            label="Correo"
-                                            variant="outlined"
-                                            fullWidth
-                                            {...register("email", {
-                                                required: "El correo es requerido.",
-                                                validate: validations.isEmail
-                                            })}
-                                            error={!!errors.email}
-                                            helperText={errors.email ? errors.email.message : ""}
-                                            type={'email'}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            label="Contraseña"
-                                            variant="outlined"
-                                            fullWidth
-                                            {...register("password", {
-                                                required: true,
+                      
 
-                                            })}
-                                            error={!!errors.password}
-                                            type={showPassword ? "text" : "password"}
-                                            helperText={
-                                                errors.password ? "La Contraseña es requerida." : ""
-                                            }
-                                            InputProps={{
-                                                endAdornment: (
-                                                    <InputAdornment position="end">
-                                                        <IconButton
-                                                            aria-label="toggle password visibility"
-                                                            onClick={handleClickShowPassword}
-                                                            onMouseDown={handleMouseDownPassword}
-                                                            edge="end">
-                                                            {showPassword ? (
-                                                                <VisibilityOff />
-                                                            ) : (
-                                                                <Visibility />
-                                                            )}
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                ),
-                                            }}
-                                        />
-                                    </Grid>
+                        <Grid item xs={12} md={8}>
+                            <Card sx={{ display: { xs: "block", sm: "flex" } }} elevation={8}>
+                                <CardMedia
+                                    component="img"
+                                    sx={{ width: 350, py: 2 }}
+                                    image="/login.svg"
+                                    alt="green iguana"
+                                />
 
-                                    <Grid item xs={12} sm={12}>
-                                        <Box display={"flex"} justifyContent={"center"}>
-                                            <Button
-                                                color="primary"
-                                                size="large"
-                                                type="submit"
-                                                sx={{ borderRadius: 20 }}>
-                                                Entrar
-                                            </Button>
-                                        </Box>
-                                    </Grid>
-
-                                    <Grid item xs={12} sm={12}>
-                                        <NextLink href={router.query.p ? `/auth/register?p=${router.query.p}` : '/auth/register'} passHref>
-                                            <Link>
-
-                                                <Box display={'flex'} justifyContent={'end'} >
-                                                    No tienes cuenta ?
-                                                </Box>
-                                            </Link>
-                                        </NextLink>
-                                    </Grid>
-                                </Grid>
-                            </Paper>
-                        </Grid> */}
-
-                        <Grid item xs={12} md={8} >
-                        <Card sx={{display: { xs: 'block', sm: 'flex' }}} elevation={8}>
-                                    <CardMedia
-                                        component="img"
-                                        sx={{ width: 350, py:2}}
-                                        image="/login.svg"
-                                        alt="green iguana"
-                                    />
-
-                                    <Box sx={{ p: 2 }} >
-                                        <Typography variant="h1" component={"h1"} color="primary">
-                                            Inicio de Sesión
-                                        </Typography>
-                                        <Grid container spacing={2} sx={{ pt: 4 }}>
-                                            <Grid item xs={12}>
-                                                <TextField
-                                                    label="Correo"
-                                                    variant="outlined"
-                                                    fullWidth
-                                                    {...register("email", {
-                                                        required: "El correo es requerido.",
-                                                        validate: validations.isEmail
-                                                    })}
-                                                    error={!!errors.email}
-                                                    helperText={errors.email ? errors.email.message : ""}
-                                                    type={'email'}
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <TextField
-                                                    label="Contraseña"
-                                                    variant="outlined"
-                                                    fullWidth
-                                                    {...register("password", {
-                                                        required: true,
-
-                                                    })}
-                                                    error={!!errors.password}
-                                                    type={showPassword ? "text" : "password"}
-                                                    helperText={
-                                                        errors.password ? "La Contraseña es requerida." : ""
-                                                    }
-                                                    InputProps={{
-                                                        endAdornment: (
-                                                            <InputAdornment position="end">
-                                                                <IconButton
-                                                                    aria-label="toggle password visibility"
-                                                                    onClick={handleClickShowPassword}
-                                                                    onMouseDown={handleMouseDownPassword}
-                                                                    edge="end">
-                                                                    {showPassword ? (
-                                                                        <VisibilityOff />
-                                                                    ) : (
-                                                                        <Visibility />
-                                                                    )}
-                                                                </IconButton>
-                                                            </InputAdornment>
-                                                        ),
-                                                    }}
-                                                />
-                                            </Grid>
-
-                                            <Grid item xs={12} sm={12}>
-                                                <Box display={"flex"} justifyContent={"center"}>
-                                                    <Button
-                                                        color="primary"
-                                                        size="large"
-                                                        type="submit"
-                                                        sx={{ borderRadius: 20 }}>
-                                                        Entrar
-                                                    </Button>
-                                                </Box>
-                                            </Grid>
-
-                                            <Grid item xs={12} sm={12}>
-                                                <NextLink href={router.query.p ? `/auth/register?p=${router.query.p}` : '/auth/register'} passHref>
-                                                    <Link>
-
-                                                        <Box display={'flex'} justifyContent={'end'} >
-                                                            No tienes cuenta ?
-                                                        </Box>
-                                                    </Link>
-                                                </NextLink>
-                                            </Grid>
+                                <Box sx={{ p: 2 }}>
+                                    <Typography variant="h1" component={"h1"} color="primary">
+                                        Inicio de Sesión
+                                    </Typography>
+                                    <Grid container spacing={2} sx={{ pt: 4 }}>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                label="Correo"
+                                                variant="outlined"
+                                                fullWidth
+                                                {...register("email", {
+                                                    required: "El correo es requerido.",
+                                                    validate: validations.isEmail,
+                                                })}
+                                                error={!!errors.email}
+                                                helperText={
+                                                    errors.email ? errors.email.message : ""
+                                                }
+                                                type={"email"}
+                                            />
                                         </Grid>
-                                    </Box>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                label="Contraseña"
+                                                variant="outlined"
+                                                fullWidth
+                                                {...register("password", {
+                                                    required: true,
+                                                })}
+                                                error={!!errors.password}
+                                                type={showPassword ? "text" : "password"}
+                                                helperText={
+                                                    errors.password
+                                                        ? "La Contraseña es requerida."
+                                                        : ""
+                                                }
+                                                InputProps={{
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton
+                                                                aria-label="toggle password visibility"
+                                                                onClick={handleClickShowPassword}
+                                                                onMouseDown={
+                                                                    handleMouseDownPassword
+                                                                }
+                                                                edge="end">
+                                                                {showPassword ? (
+                                                                    <VisibilityOff />
+                                                                ) : (
+                                                                    <Visibility />
+                                                                )}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
+                                            />
+                                        </Grid>
 
+                                        <Grid item xs={12} sm={12}>
+                                            <Box display={"flex"} justifyContent={"center"}>
+                                                <Button
+                                                    color="primary"
+                                                    size="large"
+                                                    type="submit"
+                                                    sx={{ borderRadius: 20 }}>
+                                                    Entrar
+                                                </Button>
+                                            </Box>
+                                        </Grid>
 
-                                </Card>
+                                        <Grid item xs={12} sm={12}>
+                                            <NextLink
+                                                href={
+                                                    router.query.p
+                                                        ? `/auth/register?p=${router.query.p}`
+                                                        : "/auth/register"
+                                                }
+                                                passHref>
+                                                <Link>
+                                                    <Box display={"flex"} justifyContent={"end"}>
+                                                        No tienes cuenta ?
+                                                    </Box>
+                                                </Link>
+                                            </NextLink>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
+                            </Card>
                         </Grid>
                     </Grid>
                 </form>
@@ -277,12 +224,8 @@ const LoginPage = () => {
                     open={showLoading}>
                     <CircularProgress color="inherit" />
                 </Backdrop>
-
-
             </Container>
-
         </AuthLayout>
-
     );
 };
 

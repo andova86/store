@@ -1,0 +1,65 @@
+export interface ICheckoutProductAsere {
+    id:                                  number;
+    reference_id:                        string;
+    total_amount:                        number;
+    human_readable_invoice_total_amount: string;
+    total_items:                         number;
+    orders:                              ICheckoutOrder[];
+}
+
+export interface ICheckoutOrder {
+    id:                                           number;
+    reference_id:                                 string;
+    orderitems:                                   ICheckoutOrderitem[];
+    total_amount:                                 number;
+    human_readable_amount_with_quantity_discount: string;
+    total_items:                                  number;
+}
+
+export interface ICheckoutOrderitem {
+    id:                                      number;
+    item_name:                               string;
+    item_cart_name:                          string;
+    item_full_name:                          string;
+    item_image:                              string;
+    item_category:                           string;
+    sku:                                     number;
+    type:                                    string;
+    order:                                   number;
+    features:                                IFeature[];
+    human_readable_discount_quantity_amount: string;
+    available:                               IAvailable;
+    human_readable_amount:                   string;
+    human_readable_total_amount:             string;
+    human_readable_net_total_amount:         string;
+    item_description:                        string;
+    quantity:                                number;
+    created_ts:                              Date;
+}
+
+export interface IAvailable {
+    label: string;
+    value: boolean;
+}
+
+export interface IFeature {
+    id:         number;
+    name:       string;
+    value:      string;
+    color:      null;
+    text_color: null;
+    image:      null;
+    cart_style: string;
+}
+
+export interface IOrderId 
+{
+    id:         number;
+}
+
+export interface IPayInvoice
+{
+    id:               number;
+    orders:           IOrderId[]
+    terms_accepted:   boolean
+}

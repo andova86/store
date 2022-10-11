@@ -113,6 +113,18 @@ export const ProductFakeCard: FC<Props> = ({ product }) => {
                                                 
                                                 
                                                 />
+                                                {isImageLoaded ? (
+                                            ""
+                                        ) : (
+                                            <Box display={'flex'} justifyContent={'center'}>
+                                                <Skeleton variant="rectangular" width={250} height={220} />
+
+                                            </Box>
+
+                                        )}
+
+
+
                                                 <CardContent>
                                                     
  
@@ -132,15 +144,7 @@ export const ProductFakeCard: FC<Props> = ({ product }) => {
 
                                         </Card>
 
-                                        {isImageLoaded ? (
-                                            ""
-                                        ) : (
-                                            <Box display={'flex'} justifyContent={'center'}>
-                                                <Skeleton variant="rectangular" width={250} height={220} />
-
-                                            </Box>
-
-                                        )}
+                                       
 
 
 

@@ -1,13 +1,4 @@
-import {
-    Box,
-    Grid,
-    Typography,
-    Button,
-    Snackbar,
-    IconButton,
-    Alert,
-    Paper,
-} from "@mui/material";
+import { Box, Grid, Typography, Button, Snackbar, IconButton, Alert, Paper } from "@mui/material";
 import { FC, SetStateAction, useState } from "react";
 import { getProductById } from "../../api/productsApi";
 import { ShopLayout } from "../../components/layouts";
@@ -16,9 +7,11 @@ import { GetServerSideProps } from "next";
 import { AddShoppingCart, Close } from "@mui/icons-material";
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { addProductToCart } from "../../redux/slices/cart";
+import { addProductToCart, cartDataSet } from "../../redux/slices/cart";
 import { IProductAsere } from "../../modules/products/domain/product";
 import Image from "next/image";
+import { postAddProductToCart } from "../../api/cartApi";
+import { toast } from "react-toastify";
 
 interface Props {
     product: IProductAsere;
@@ -29,20 +22,22 @@ const ProductPage: FC<Props> = ({ product, toggleTheme }) => {
     const [cantP, setcantP] = useState(1);
     const [open, setOpen] = useState(false);
 
-    const state = useSelector((state: RootState) => state.cart);
+    const state = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
 
-    const handleAddProductToStore = () => {
-        dispatch(addProductToCart({ product: product, quantity: cantP }));
-        setOpen(true);
-    };
+    const handleAddProductToStore = async () => {
+        try {
+            const result = await postAddProductToCart(
+                { id: product.id, quantity: cantP },
+                state.access_token
+            );
+            console.log(result);
+            dispatch(cartDataSet(result.data));
 
-    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === "clickaway") {
-            return;
+            toast.success("Se agregó el producto al carrito de compras correctamente.");
+        } catch (error) {
+            toast.error("Ocurrió un error al agregar el producto al carrito de compras.");
         }
-
-        setOpen(false);
     };
 
     const action = (
@@ -61,27 +56,32 @@ const ProductPage: FC<Props> = ({ product, toggleTheme }) => {
                 toggleTheme={toggleTheme}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
-                       {/*  <ProductSlideShow images={product.images} /> */}
-                      <Paper elevation={3} sx={{display:'flex', justifyContent: 'center' ,alignItems:"center", borderRadius:'20px'}}>
-
-                      <Image 
-                       alt={product.product_item.product.name}
-                       src={product.product_item.product.product_image}
-                       width={400}
-                       height={400}
-                       objectFit={'contain'}
-                       />
-                      </Paper>
-
+                        {/*  <ProductSlideShow images={product.images} /> */}
+                        <Paper
+                            elevation={3}
+                            sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderRadius: "20px",
+                            }}>
+                            <Image
+                                alt={product.product_item.product.name}
+                                src={product.product_item.product.product_image}
+                                width={400}
+                                height={400}
+                                objectFit={"contain"}
+                            />
+                        </Paper>
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
                         <Box display={"flex"} flexDirection={"column"}>
-                            <Typography variant="h1" component="h1" color={'primary'}>
+                            <Typography variant="h1" component="h1" color={"primary"}>
                                 {product.product_item.product.full_name}
                             </Typography>
 
-                            <Typography variant="h2" sx={{fontWeight:900}}>
+                            <Typography variant="h2" sx={{ fontWeight: 900 }}>
                                 {`$ ${product.current_price}`}
                             </Typography>
 
@@ -108,22 +108,14 @@ const ProductPage: FC<Props> = ({ product, toggleTheme }) => {
 
                             {/* <Chip label='No hay disponibles' color='error' variant='outlined'/>*/}
                             <Box sx={{ mt: 3 }}>
-                                <Typography variant="subtitle2">Descripción</Typography>
-                                <Typography variant="body2">{product.product_item.product.description}</Typography>
+                                <Typography variant="body1" color={'primary'} sx={{mb:2, fontWeight:700}}>Descripción</Typography>
+                                <Typography variant="body2">
+                                    {product.product_item.product.description}
+                                </Typography>
                             </Box>
                         </Box>
                     </Grid>
                 </Grid>
-
-                <Snackbar
-                    open={open}
-                    autoHideDuration={3000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                    action={action}
-                    color="success">
-                    <Alert severity="success">Se agregó al carrito</Alert>
-                </Snackbar>
             </ShopLayout>
         </>
     );

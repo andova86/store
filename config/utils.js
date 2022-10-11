@@ -5,7 +5,7 @@ export function getAllErrorsInObjectAsString(obj, keysVerboseName = {}, defaultM
     },"")
 }
 
-export function getAllErrorsInObject(obj, keysVerboseName = {}, defaultMessage = "Ha ocurrido un error sin documentar" ){
+function getAllErrorsInObject(obj, keysVerboseName = {}, defaultMessage = "Ha ocurrido un error sin documentar" ){
     let res = [];
     if (obj && Object.keys(obj).length !== 0){ 
         Object.keys(obj).forEach((key)=>{

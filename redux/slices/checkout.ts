@@ -1,6 +1,19 @@
+import { ICheckoutProductAsere } from './../../modules/checkout/domain/checkout';
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+export interface ICheckoutAllData {
+    firstName: string,
+    lastName: string,
+    address: string,
+    address2: string,
+    zip: string,
+    city: string,
+    country: string,
+    phone: string,
+    checkoutData: ICheckoutProductAsere  | null
+} 
+
+const initialState:ICheckoutAllData = {
     firstName: '',
     lastName: '',
     address: '',
@@ -9,6 +22,7 @@ const initialState = {
     city: '',
     country: '',
     phone: '',
+    checkoutData: null
 }
 
 export const themeSlice = createSlice({
@@ -50,6 +64,10 @@ export const themeSlice = createSlice({
             state.phone = action.payload
         },
 
+        checkout_dataSet: (state, action) => {
+            state.checkoutData = action.payload
+        },
+
 
 
 
@@ -58,7 +76,7 @@ export const themeSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { resetStateCheckout, checkout_firstNameSet, checkout_lastNameSet ,checkout_addressSet,
-    checkout_address2Set, checkout_zipSet, checkout_citySet, checkout_countrySet, checkout_phoneSet
+    checkout_address2Set, checkout_zipSet, checkout_citySet, checkout_countrySet, checkout_phoneSet,checkout_dataSet
 } = themeSlice.actions
 
 export default themeSlice.reducer

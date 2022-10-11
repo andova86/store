@@ -8,3 +8,9 @@ export const intanceAxios : AxiosInstance = Axios.create({
 });
 
 
+export const intanceAxiosApiKey  = (access_token: string) => Axios.create({
+    baseURL: configEnv?.api,
+    headers: {'Authorization': `Bearer ${access_token}`}
+});
+
+

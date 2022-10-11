@@ -85,7 +85,6 @@ export async function postRegisterUser(dataLogin: IRegisterUser) {
         };
     }
 }
- 
 
 export async function getUserData(id: number) {
    
@@ -105,3 +104,39 @@ export async function getUserData(id: number) {
         };
     }
 }
+
+export async function postVerifyToken(token: {}) {
+    const res = await intanceAxios.post('auth/token/verify/', token);
+
+    const data = await res.data;
+    console.log(data);
+
+    if (!data) {
+        return {
+            notFound: true,
+        };
+    } else {
+        return {
+            data: data,
+        };
+    }
+}
+
+export async function postRefreshToken(token: {}) {
+    const res = await intanceAxios.post('auth/token/refresh/', token);
+
+    const data = await res.data;
+    console.log(data);
+
+    if (!data) {
+        return {
+            notFound: true,
+        };
+    } else {
+        return {
+            data: data,
+        };
+    }
+}
+
+
