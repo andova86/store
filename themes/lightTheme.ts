@@ -12,6 +12,12 @@ export const lightTheme = createTheme({
     },
     secondary: {
       main: '#fb8500'
+    },
+    background: {
+      default: "#f8f9fa"
+    },
+    info: {
+      main: '#fff',
     }
   
   },
@@ -23,13 +29,15 @@ export const lightTheme = createTheme({
     },
     MuiAppBar: {
       defaultProps: {
-        elevation: 4,
+        elevation: 0,
         position: 'fixed',
       },
       styleOverrides: {
         root: {
           backgroundColor: 'white',
-          height: 60
+          height: 100,
+         /*  backgroundImage:  "linear-gradient(to bottom , #fff, #DAEAF1)" */
+
         },
       }
     },
