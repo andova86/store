@@ -1,10 +1,10 @@
 import { Grid, Typography } from '@mui/material'
 import { FC } from 'react'
-import { IProductAsere } from '../../domain/product'
+import { IProductAsere, IProductItem } from '../../domain/product'
 import { ProductCard } from '../item/ProductCard'
 
 interface Props {
-products: IProductAsere[]
+products: IProductItem[]
 }
 
 export const ProductList:FC<Props> = ({ products }) => {

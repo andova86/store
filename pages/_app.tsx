@@ -40,7 +40,7 @@ React.useEffect(() => {
 }, [selectedTheme]);
 
 const toggleTheme: React.MouseEventHandler<HTMLAnchorElement> = () => {
-  console.log('entroeee');
+  //console.log('entroeee');
   console.log(selectedTheme);
   
   

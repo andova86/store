@@ -19,7 +19,7 @@ export const lightTheme = createTheme({
     info: {
       main: '#fff',
     }
-  
+
   },
   components: {
     MuiLink: {
@@ -34,9 +34,13 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          backgroundColor: 'white',
           height: 100,
-         /*  backgroundImage:  "linear-gradient(to bottom , #fff, #DAEAF1)" */
+
+          backgroundColor: '#FFF',
+          // backgroundImage: 'linear-gradient(0deg, #FFF 0%, #B5FFFC 100%)'
+          
+
+          /*  backgroundImage:  "linear-gradient(to bottom , #fff, #DAEAF1)" */
 
         },
       }
@@ -65,7 +69,7 @@ export const lightTheme = createTheme({
         variant: 'contained',
         size: 'small',
         disableElevation: true,
-        color:'info'
+        color: 'info'
       },
       styleOverrides: {
         root: {
@@ -92,6 +96,6 @@ export const lightTheme = createTheme({
         }
       }
     }
-    
+
   }
 });

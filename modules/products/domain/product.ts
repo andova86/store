@@ -49,7 +49,7 @@ export interface IProduct {
     name_es: string;
     name_en: null;
     slug: string;
-    type_package: number;
+    type_package: ITypePackage;
     category: ICategory;
 }
 
@@ -64,4 +64,32 @@ export interface ICategory {
     description_es: string;
     description_en: string;
     parent_category: number;
+}
+
+export interface ITypePackage {
+    name: string;
+}
+
+
+export interface IProductItem {
+    id:                    number;
+    item_name:             string;
+    item_cart_name:        string;
+    item_full_name:        string;
+    item_image:            string;
+    price:                 number;
+    features:              Feature[];
+    human_readable_amount: string;
+    item_description:      string;
+    item_category:         string;
+}
+
+export interface IFeature {
+    id:         number;
+    name:       string;
+    value:      string;
+    color:      null;
+    text_color: null;
+    image:      null;
+    cart_style: string;
 }

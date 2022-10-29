@@ -5,7 +5,7 @@ import { FC, useState, ChangeEvent } from 'react';
 import { getAllProducts } from '../api/productsApi';
 import { ShopLayout } from '../components/layouts';
 import { ProductList } from '../modules/products/application/list/ProductList';
-import { IProductAsere } from '../modules/products/domain/product';
+import { IProductAsere, IProductItem } from '../modules/products/domain/product';
 import { Swiper, SwiperSlide, } from 'swiper/react';
 import { Navigation, Scrollbar, A11y } from 'swiper';
 // Import Swiper styles
@@ -18,7 +18,7 @@ import { ListCategories } from '../modules/categories/application/list/ListCateg
 import ImageFT from 'next/future/image';
 import { ProductSale } from '../modules/products/application/item/ProductSale';
 interface Props {
-  productList: IProductAsere[],
+  productList: IProductItem[],
   toggleTheme: any,
   num_pages: number
 
@@ -53,7 +53,7 @@ const Home: FC<Props> = ({ productList, toggleTheme, num_pages }) => {
   };
 
   return (
-    <ShopLayout title='Lista de Productos' pageDescription='' toggleTheme={toggleTheme}>
+    <ShopLayout title='Asere Market' pageDescription='Tu opción para comprar online para la familia.' toggleTheme={toggleTheme}>
 
       <Grid container spacing={2}>
         <Grid item md={8} xs={12} display='flex' alignItems='end'>

@@ -32,7 +32,8 @@ export const LanguageBanner = () => {
      <List
         component="nav"
         aria-label="Device settings"
-        sx={{ bgcolor: 'background.paper' , width: '100px', py:0, my:0, color:'#0077b6', display: { xs: "none", md: "flex"}}}
+        
+        sx={{   py:0, my:0, color:'#0077b6', display: { xs: "none", md: "flex"}}}
          
       >
         <ListItem
@@ -45,8 +46,9 @@ export const LanguageBanner = () => {
           onClick={handleClickListItem}
         >
           <ListItemText
-            primary={options[selectedIndex]}
-        
+            secondary={options[selectedIndex]}
+            primary='Idioma'
+            sx={{textAlign:'center'}}
           />
         </ListItem>
 

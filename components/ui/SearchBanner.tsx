@@ -1,5 +1,5 @@
-import { SearchOutlined, SearchRounded } from '@mui/icons-material'
-import { Paper, IconButton, InputBase, Divider, TextField, MenuItem } from '@mui/material'
+import { SearchOutlined, SearchRounded} from '@mui/icons-material'
+import { Paper, IconButton, InputBase, Divider, TextField, MenuItem , Button , InputAdornment} from '@mui/material'
 import { useState } from 'react'
 
 export const SearchBanner = () => {
@@ -18,34 +18,34 @@ export const SearchBanner = () => {
                 id="standard-select-currency"
                 select
                 label="Categoría"
-                sx={{minWidth:'200px', pt:0, mt:0}}
+                sx={{minWidth:'200px', pt:0, mt:0, borderRadius:0}}
                 value={category}
-                size={'small'}
+               
                 onChange={(e) => { setcategory(e.target.value) }}
                 // helperText="Please select your currency"
-                variant="outlined"
+                variant="filled"
                
                 
             >
                 {arrCategory.map((option) => (
-                    <MenuItem key={option} value={option} sx={{pt:0, mt:0}}>
+                    <MenuItem key={option} value={option} sx={{pt:0, mt:0 , borderRadius:0}}>
                         {option}
                     </MenuItem>
                 ))}
             </TextField>
-            
-            <InputBase
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="Buscar productos..."
-                inputProps={{ 'aria-label': 'search google maps', 'variant' :'outlined' }}
+
+            <TextField id="filled-basic" label="" variant="filled" fullWidth sx={{borderRadius:0}}
+             InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton edge="end" color="primary">
+                      <SearchOutlined />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
-         {/*    <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-                <SearchOutlined />
-            </IconButton> */}
-            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
-                <SearchRounded />
-            </IconButton>
+            
         </Paper>
     )
 }

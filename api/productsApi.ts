@@ -3,7 +3,7 @@
 import { intanceAxios } from "../config";
 
 export async function getAllProducts(length:number , page:number) {
-    const res = await intanceAxios.get(`inventory/frontproducts/?page=${page}&length=${length}`);
+    const res = await intanceAxios.get(`ordering/cart-products/?page=${page}&length=${length}`);
     const data = await res.data;
 
     if (!data) {

@@ -1,6 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+
+export interface ITheme {
+    isOpenMenu: boolean,
+    isDark: boolean
+}
+
+
+const initialState : ITheme = {
     isOpenMenu: false,
     isDark: false
 }
