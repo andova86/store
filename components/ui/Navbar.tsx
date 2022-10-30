@@ -11,13 +11,13 @@ import { UserBanner } from "./UserBanner";
 import Image from "next/image";
 import { LanguageBanner } from "./LanguageBanner";
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 import Slide from "@mui/material/Slide";
-
+import Cookies from "js-cookie";
 
 type HomeProps = {
-    toggleTheme?: React.MouseEventHandler<HTMLButtonElement>;
+    toggleTheme: () => void;
 };
 interface Props {
     /**
@@ -112,6 +112,7 @@ export const Navbar = (props: HomeProps) => {
     const stateCart = useSelector((state: RootState) => state.cart);
     const stateUser = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
+    const theme = useTheme();
 
     useEffect(() => {
         document.documentElement.style.setProperty("--swiper-theme-color", "#FFF")
@@ -119,8 +120,9 @@ export const Navbar = (props: HomeProps) => {
 
     const changeTheme = () => {
 
-        props.toggleTheme()
-        dispatch(isDarkSet(!state.isDark))
+      
+     props.toggleTheme()
+     Cookies.set('theme', Cookies.get('theme') === 'light' ? 'light':'dark' , { expires: 7 })
     
       }
     
@@ -170,7 +172,7 @@ export const Navbar = (props: HomeProps) => {
 
                             <Tooltip title="Cambiar de Modo">
                             <FormControlLabel
-        control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked={state.isDark}  onClick={()=> {changeTheme()}}/>}
+        control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked={Cookies.get('theme') !== 'light'}  onClick={()=> {changeTheme()}}/>}
         label=""
       />
                             </Tooltip>

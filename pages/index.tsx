@@ -17,6 +17,7 @@ import Image from 'next/image';
 import { ListCategories } from '../modules/categories/application/list/ListCategories';
 import ImageFT from 'next/future/image';
 import { ProductSale } from '../modules/products/application/item/ProductSale';
+import { ProductFilter } from '../modules/products/application/filter/ProductFilter';
 interface Props {
   productList: IProductItem[],
   toggleTheme: any,
@@ -56,6 +57,9 @@ const Home: FC<Props> = ({ productList, toggleTheme, num_pages }) => {
     <ShopLayout title='Asere Market' pageDescription='Tu opción para comprar online para la familia.' toggleTheme={toggleTheme}>
 
       <Grid container spacing={2}>
+     {/*  <Grid xs={12}>
+        <ProductFilter />
+      </Grid> */}
         <Grid item md={8} xs={12} display='flex' alignItems='end'>
           <Swiper
             modules={[Navigation, Scrollbar, A11y]}
@@ -71,7 +75,7 @@ const Home: FC<Props> = ({ productList, toggleTheme, num_pages }) => {
                 width="0"
                 height="0"
                 sizes="100vw"
-                style={{ width: '100%', height: 'auto' , borderRadius: '10px'}} alt={''}/>
+                style={{ width: '100%', height: 'auto' , borderRadius: '10px'}} alt={'banner3'}/>
 
             </SwiperSlide>
             <SwiperSlide >
@@ -80,7 +84,7 @@ const Home: FC<Props> = ({ productList, toggleTheme, num_pages }) => {
                 width="0"
                 height="0"
                 sizes="100vw"
-                style={{ width: '100%', height: 'auto' }} alt={''}/>
+                style={{ width: '100%', height: 'auto' , borderRadius: '10px'}} alt={''}/>
 
             </SwiperSlide>
 
@@ -90,7 +94,7 @@ const Home: FC<Props> = ({ productList, toggleTheme, num_pages }) => {
                 width="0"
                 height="0"
                 sizes="100vw"
-                style={{ width: '100%', height: 'auto' }} alt={''}/>
+                style={{ width: '100%', height: 'auto' , borderRadius: '10px'}} alt={'banner3'}/>
             </SwiperSlide>
 
 

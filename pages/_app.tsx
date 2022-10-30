@@ -16,6 +16,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'js-cookie';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -28,7 +29,7 @@ let persistor = persistStore(store);
 
 export default function MyApp(props: MyAppProps) {
 
-  const [activeTheme, setActiveTheme] = React.useState(lightTheme);
+const [activeTheme, setActiveTheme] = React.useState(Cookies.get('theme') === 'light' ?  lightTheme : darkTheme);
 const [selectedTheme, setSelectedTheme] = React.useState<'light' | 'dark'>('light');
 
 function getActiveTheme(themeMode: 'light' | 'dark') {
@@ -36,7 +37,10 @@ function getActiveTheme(themeMode: 'light' | 'dark') {
 }
 
 React.useEffect(() => {
+   Cookies.set('theme', selectedTheme , { expires: 7 })
    setActiveTheme(getActiveTheme(selectedTheme))
+   console.log(Cookies.get('theme'));
+   
 }, [selectedTheme]);
 
 const toggleTheme: React.MouseEventHandler<HTMLAnchorElement> = () => {
