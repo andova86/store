@@ -8,9 +8,9 @@ const EmptyPage: NextPage = () => {
     
     return (
         <>
-        <ShopLayout pageDescription="" title="No hay articulos en el carrito">
+       {/*  <ShopLayout pageDescription="" title="No hay articulos en el carrito">
            
-        </ShopLayout>
+        </ShopLayout> */}
         </>
         
     )

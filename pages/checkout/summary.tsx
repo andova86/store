@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 import { getAllErrorsInObjectAsString } from "../../config/utils";
 
 interface Props {
-    toggleTheme: any;
+    toggleTheme: () => void;
 }
 
 const SummaryPage: FC<Props> = ({ toggleTheme }) => {

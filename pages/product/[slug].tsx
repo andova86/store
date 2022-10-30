@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 
 interface Props {
     product: IProductAsere;
-    toggleTheme: any;
+    toggleTheme: () => void;
 }
 
 const ProductPage: FC<Props> = ({ product, toggleTheme }) => {

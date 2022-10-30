@@ -10,7 +10,7 @@ interface Props {
     title: string;
     pageDescription: string;
     imageFullUrl?: string;
-    toggleTheme?: React.MouseEventHandler<HTMLButtonElement>;
+    toggleTheme: () => void;
 }
 
 export const ShopLayout: FC<Props> = ({

@@ -7,19 +7,15 @@ import { CartList } from "../../modules/cart/application/list/CartList";
 import { OrderSummary } from "../../modules/cart/application/detail/OrderSummary";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { CartEmpty } from "../../modules/cart/application/detail/CartEmpty";
 import { useRouter } from "next/router";
 import { postRefreshToken, postVerifyToken } from "../../api/userApi";
-import { useGetCartListProduct } from "../../modules/cart/application/hooks/useGetCartListProduct";
-import { LoadingStore } from "../../components/ui/LoadingStore";
 import { postCheckout } from "../../api/cartApi";
 import { checkout_dataSet } from "../../redux/slices/checkout";
 import { toast } from "react-toastify";
 import { getAllErrorsInObjectAsString } from "../../config/utils";
-import { AxiosError } from "axios";
 
 interface Props {
-    toggleTheme?: React.MouseEventHandler<HTMLButtonElement>;
+    toggleTheme: () => void;
 }
 
 const CartPage: FC<Props> = ({ toggleTheme }) => {

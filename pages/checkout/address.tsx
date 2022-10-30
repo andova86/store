@@ -8,7 +8,7 @@ import {
     Button,
     Box,
 } from "@mui/material";
-import React from "react";
+import { FC } from "react";
 import { ShopLayout } from "../../components/layouts";
 import { useForm, Controller } from "react-hook-form";
 import { IOrder, IShippingAddress } from "../../modules/checkout/domain/order";
@@ -25,8 +25,12 @@ import {
     checkout_zipSet,
 } from "../../redux/slices/checkout";
 import { useRouter } from "next/router";
+interface Props {
+    toggleTheme: () => void;
+}
 
-const AddressPage = () => {
+
+const AddressPage: FC<Props> = ({ toggleTheme }) => {
     const stateCart = useSelector((state: RootState) => state.checkout);
     const dispatch = useDispatch();
     const router = useRouter();
@@ -65,7 +69,8 @@ const AddressPage = () => {
     };
 
     return (
-        <ShopLayout title="Direccion" pageDescription="Confirmar direccion del destino">
+        <ShopLayout title="Direccion" pageDescription="Confirmar direccion del destino" toggleTheme={toggleTheme}>
+            
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container spacing={0} display="flex" justifyContent={"center"}>
                     <Grid item xs={12} md={10} lg={8}>
